@@ -19,14 +19,18 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.10'
-  spec.add_development_dependency 'minitest'
-  spec.add_development_dependency 'pry-byebug'
-  spec.add_development_dependency 'yard'
+  spec.required_ruby_version = '>= 3.0.0'
 
-  spec.add_dependency 'rake'
-  spec.add_dependency 'concurrent-ruby-ext'
-  spec.add_dependency 'sequel'
-  spec.add_dependency 'sqlite3'
-  spec.add_dependency 'thor'
+  spec.add_development_dependency 'bundler', '~> 2.4'
+  spec.add_development_dependency 'minitest', '~> 5.20'
+  spec.add_development_dependency 'pry-byebug', '~> 3.10'
+  spec.add_development_dependency 'yard', '~> 0.9'
+  spec.add_development_dependency 'ruby-lsp', '~> 0.15.0'
+
+  spec.add_dependency 'rake', '~> 13.0'
+  spec.add_dependency 'concurrent-ruby-ext', '~> 1.2'
+  spec.add_dependency 'sequel', '~> 5.76'
+  spec.add_dependency 'sqlite3', '~> 1.7'
+  spec.add_dependency 'thor', '~> 1.3'
+  spec.add_dependency 'logger', '~> 1.6'
 end

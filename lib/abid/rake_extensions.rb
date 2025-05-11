@@ -1,11 +1,17 @@
 # Delegate Rake.application to Abid.global.application
-class << Rake
-  def application
-    Abid.global.application
-  end
+# Ruby 3.4対応: メソッドの再定義を避ける
+unless Rake.singleton_methods.include?(:abid_original_application)
+  class << Rake
+    alias_method :abid_original_application, :application
+    alias_method :abid_original_application=, :application=
+    
+    def application
+      Abid.global.application
+    end
 
-  def application=(app)
-    Abid.global.application = app
+    def application=(app)
+      Abid.global.application = app
+    end
   end
 end
 

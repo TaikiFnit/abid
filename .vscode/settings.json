@@ -1,0 +1,15 @@
+{
+  "ruby.useBundler": true,
+  "ruby.useLanguageServer": true,
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true
+    }
+  },
+  "ruby.lsp.bundlerPath": "/usr/local/bin/bundle",
+  "ruby.interpreter.commandPath": "/usr/local/bin/ruby",
+  "editor.formatOnSave": true,
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp"
+  }
+}

@@ -7,6 +7,9 @@ module Abid
       extend Forwardable
 
       def self.interface(name, args = [])
+        # Ruby 3.4対応: メソッドの存在を確認して重複定義を回避
+        return if method_defined?(name)
+        
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
         def #{name}(#{args.join(', ')})
           raise NotImplementedError

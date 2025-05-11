@@ -6,7 +6,7 @@ Abid is a simple Workflow Engine based on Rake.
 
 ## Installation
 
-1. Install abid gem.
+1.  Install abid gem.
 
     Add this line to your application's Gemfile:
 
@@ -24,7 +24,7 @@ Abid is a simple Workflow Engine based on Rake.
 
     After installed execute:
 
-2. Setup a database.
+2.  Setup a database.
 
         $ bundle exec abidsc init
 
@@ -71,10 +71,9 @@ $ bundle exec abid count date=2016-01-01
 
 This Abidfile has two tasks: `fetch_source` and `count`. They are kinds of rake tasks, but they have some additional features:
 
-* A play can take parameters. They are declared with `param` keyword, and passed via environment variables.
-* All play results are saved to the external database. If a play is invoked twice with same parameters, it will be ignored.
-* Depending tasks can be declared in `setup` block. If a depending task is a play task, parameters can be specified.
-
+- A play can take parameters. They are declared with `param` keyword, and passed via environment variables.
+- All play results are saved to the external database. If a play is invoked twice with same parameters, it will be ignored.
+- Depending tasks can be declared in `setup` block. If a depending task is a play task, parameters can be specified.
 
 ## Execution Model
 
@@ -226,6 +225,7 @@ If block given, it is evaluated in the same context as `run` method.
 The block is called only once and its result is cached.
 
 Following settings are used in abid core:
+
 - `worker`
 - `volatile`
 
@@ -233,7 +233,7 @@ Following settings are used in abid core:
 
 ```ruby
 play :sample do
-  param :name, type: :string  
+  param :name, type: :string
   setup do
     needs "parent_task:#{name}"
   end
@@ -362,10 +362,14 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
+### Ruby Version Compatibility
+
+- Ruby 3.0-3.3: Fully supported
+- Ruby 3.4: Basic functionality works, but some tests may fail due to changes in Ruby's core libraries and Rake 13+ compatibility. Work in progress to fully support Ruby 3.4.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ojima-h/abid. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
-
 
 ## License
 

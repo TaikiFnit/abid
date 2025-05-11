@@ -134,6 +134,14 @@ module Abid
     def handle_options
       options.rakelib = %w(rakelib tasks)
       options.trace_output = $stderr
+      
+      # Ruby 3.4対応: optionsに必要なアクセッサを定義
+      class << options
+        attr_accessor :log_level, :logging, :config_file, :repair, :preview, 
+                      :wait_external_task, :force, :show_job_preqs, :show_job_preqs_to,
+                      :summary
+      end
+      
       options.log_level = Logger::Severity::INFO
       options.logging = true
 
