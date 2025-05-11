@@ -16,13 +16,19 @@ unless Rake.singleton_methods.include?(:abid_original_application)
 end
 
 module Rake
+  # Rake::Task拡張
   class Task
-    def bind(params = {})
-      Abid::DSL::RakeJob.new(self, params)
+    # Rake 13.x互換性のための明示的メソッド定義
+    unless method_defined?(:bind)
+      def bind(params = {})
+        Abid::DSL::RakeJob.new(self, params)
+      end
     end
 
-    def params_spec
-      {}
+    unless method_defined?(:params_spec)  
+      def params_spec
+        {}
+      end
     end
   end
 end

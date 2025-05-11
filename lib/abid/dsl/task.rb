@@ -22,9 +22,13 @@ module Abid
       end
 
       def clear
-        @internal_definitions.clear
+        @prerequisites.clear if defined?(@prerequisites)
+        @actions.clear if defined?(@actions)
+        @comments = nil
+        @lock = nil
+        @already_invoked = false
+        @internal_definitions.clear if defined?(@internal_definitions)
         initialize_internal
-        super
       end
 
       def bind(params = {})

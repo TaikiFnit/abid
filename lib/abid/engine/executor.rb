@@ -30,7 +30,8 @@ module Abid
       #
       # @return [Boolean] false if the job is not executed
       def start
-        return false unless @prerequisites.all?(&:complete?)
+        # Rake 13.x compatibility - ensure prerequisites are properly checked
+        return false unless prerequisites_satisfied?
 
         return false if check_to_cancel
         return false if check_to_skip
@@ -38,6 +39,11 @@ module Abid
         return false unless @process.start
         execute_or_wait
         true
+      end
+
+      # Ensure prerequisites are properly checked for both Rake 12.x and 13.x
+      def prerequisites_satisfied?
+        @prerequisites.all?(&:complete?)
       end
 
       private

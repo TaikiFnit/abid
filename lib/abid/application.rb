@@ -49,15 +49,17 @@ module Abid
     end
 
     def run_with_engine
-      yield
-      @env.engine.shutdown
-    rescue Exception => exception
-      @env.engine.kill(exception)
-      raise
-    else
-      raise @env.engine.errors.first unless @env.engine.errors.empty?
-    ensure
-      call_after_all_actions
+      begin
+        yield
+        @env.engine.shutdown
+      rescue Exception => exception
+        @env.engine.kill(exception)
+        raise
+      else
+        raise @env.engine.errors.first unless @env.engine.errors.empty?
+      ensure
+        call_after_all_actions
+      end
     end
 
     # Display the job prerequisites
@@ -135,15 +137,21 @@ module Abid
       options.rakelib = %w(rakelib tasks)
       options.trace_output = $stderr
       
-      # Ruby 3.4対応: optionsに必要なアクセッサを定義
+      # Ruby 3.4対応とRake 13.x互換性のためのアクセッサ定義
       class << options
         attr_accessor :log_level, :logging, :config_file, :repair, :preview, 
                       :wait_external_task, :force, :show_job_preqs, :show_job_preqs_to,
-                      :summary
+                      :summary, :suppress_backtrace_pattern, :disable_state,
+                      :wait_external_task_interval, :wait_external_task_timeout
       end
       
+      # Rake 13.xデフォルト値の設定
       options.log_level = Logger::Severity::INFO
       options.logging = true
+      options.suppress_backtrace_pattern = nil
+      options.disable_state = false
+      options.wait_external_task_interval = 1
+      options.wait_external_task_timeout = 3600
 
       OptionParser.new do |opts|
         opts.banner = 'See full documentation at https://github.com/ojima-h/abid.'

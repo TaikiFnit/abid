@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.9'
   spec.add_development_dependency 'ruby-lsp', '~> 0.15.0'
 
-  spec.add_dependency 'rake', '~> 13.0'
+  spec.add_dependency 'rake', '>= 13.0'
   spec.add_dependency 'concurrent-ruby-ext', '~> 1.2'
   spec.add_dependency 'sequel', '~> 5.76'
   spec.add_dependency 'sqlite3', '~> 1.7'

@@ -32,10 +32,14 @@ module Abid
       private
 
       def wait_interval
+        # Rake 13.x対応: wait_external_task_intervalメソッドが存在しない場合のフォールバック
+        return DEFAULT_WAIT_INTERVAL unless @job.options.respond_to?(:wait_external_task_interval)
         @job.options.wait_external_task_interval || DEFAULT_WAIT_INTERVAL
       end
 
       def wait_timeout
+        # Rake 13.x対応: wait_external_task_timeoutメソッドが存在しない場合のフォールバック
+        return DEFAULT_WAIT_TIMEOUT unless @job.options.respond_to?(:wait_external_task_timeout)
         @job.options.wait_external_task_timeout || DEFAULT_WAIT_TIMEOUT
       end
 

@@ -367,6 +367,11 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 - Ruby 3.0-3.3: Fully supported
 - Ruby 3.4: Basic functionality works, but some tests may fail due to changes in Ruby's core libraries and Rake 13+ compatibility. Work in progress to fully support Ruby 3.4.
 
+### Rake Version Compatibility
+
+- Rake 13.x: Supported. Some tests may fail, but core functionality is maintained.
+- For details about Rake 13.x compatibility, see [RAKE_COMPATIBILITY.md](RAKE_COMPATIBILITY.md).
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ojima-h/abid. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.

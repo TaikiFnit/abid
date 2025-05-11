@@ -30,6 +30,11 @@ class AbidTest < Minitest::Test
     @env.application.init
     @env.application.options.logging = false
     @env.application.options.summary = false
+    
+    # Rake 13.x compatibility - suppress backtrace pattern
+    if @env.application.options.respond_to?(:suppress_backtrace_pattern=)
+      @env.application.options.suppress_backtrace_pattern = nil
+    end
   end
 
   def mock_state(name, params = {})
@@ -65,11 +70,31 @@ class AbidTest < Minitest::Test
   end
 
   def in_options(opts)
-    orig = opts.map { |k, _| [k, env.application.options[k]] }
-    opts.each { |k, v| env.application.options[k] = v }
+    return yield if opts.nil? || opts.empty?  # Rake 13.x対応: nilや空のハッシュの場合は何もせずにブロックを実行
+    
+    orig = {}
+    # Rake 13.x対応: optionsオブジェクトの変更が必要な場合は既存のキーを保存
+    opts.each do |k, _|
+      orig[k] = env.application.options.respond_to?(k) ? env.application.options.send(k) : nil
+    end
+    
+    # オプションを設定
+    opts.each do |k, v|
+      if env.application.options.respond_to?(:"#{k}=")
+        env.application.options.send(:"#{k}=", v)
+      end
+    end
+    
     yield
   ensure
-    orig.each { |k, v| env.application.options[k] = v }
+    # 元の値に戻す
+    if orig && !orig.empty?
+      orig.each do |k, v|
+        if env.application.options.respond_to?(:"#{k}=")
+          env.application.options.send(:"#{k}=", v)
+        end
+      end
+    end
   end
 
   # empty Rake::TaskArguments

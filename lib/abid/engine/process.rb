@@ -74,11 +74,16 @@ module Abid
       attr_reader :state_service
 
       def prerequisites
-        return [] if @job.options.force
+        # Rake 13.x互換性: options.force のアクセス方法を確認
+        return [] if force_option?
         @job.prerequisites.map { |preq| @engine.process_manager[preq] }
       end
 
-      #
+      # Rake 13.x対応: オプションアクセスの互換性メソッド
+      def force_option?
+        return @job.options.force if @job.options.respond_to?(:force)
+        false # デフォルト値
+      end
       # State predicates
       #
       %w(unscheduled pending running

@@ -1,4 +1,5 @@
 require 'yaml'
+require 'digest/md5'  # Ruby 3.4対応: Digestライブラリを明示的に読み込む
 
 module Abid
   class StateManager

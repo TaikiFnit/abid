@@ -46,7 +46,14 @@ module Abid
       end
 
       def volatile?
-        play.volatile || task.application.options.disable_state
+        play.volatile || disable_state_option?
+      end
+
+      # Rake 13.x互換性のための対応
+      def disable_state_option?
+        options = task.application.options
+        return options.disable_state if options.respond_to?(:disable_state)
+        false  # デフォルト値はfalse
       end
 
       def trace_execute
